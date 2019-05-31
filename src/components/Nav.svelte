@@ -45,7 +45,7 @@
     }
 </style>
 
-<nav class="nav-container wrap wrap--wide">
+<nav class="nav-container wrap wrap--wide" style="display:none;">
 	<ul class="nav nav--list">
         <li><a class='nav__link nav__link--home{segment === undefined ? " selected" : ""}' href="." title="Home">Chris Lee</a></li>
 		<li><a rel=prefetch class='nav__link nav__link--work{segment === "work" ? " selected" : ""}' href='work'>Work</a></li>

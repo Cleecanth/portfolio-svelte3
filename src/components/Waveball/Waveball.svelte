@@ -1,17 +1,17 @@
 <script context="module">
 //import anime from 'animejs';
 //import animate from './animation.js';
-//import animate from './animation.store.js';
-import { interpolate } from 'polymorph-js';
 import { tweened } from 'svelte/motion';
+import { writable, get, derived } from 'svelte/store';
 import { cubicOut } from 'svelte/easing';
-import { toFrom } from './motion.js';
+import animate from './interpolation.js';
+// import { toFrom } from './motion.js';
 import { tick } from 'svelte';
 import forEach from '../../helpers/for-each.js';
 import reverseArray from '../../helpers/reverse-array.js';
 
 export async function preload() {
-    return { fromGroup, toGroup };
+    //return { fromGroup, toGroup };
 }
 
 </script>
@@ -34,8 +34,8 @@ export async function preload() {
     let toGroup;
     let paths;
     let tPath2;
+    let animationsReady;
     let notween = (f,t) => () => t;
-    let tween = (f,t) => interpolate([f,t]);
 
     let animOpts = {
         easing: t => t,
@@ -47,18 +47,15 @@ export async function preload() {
         repeat: false
     };
 
-    let animation = toFrom(
-        {
-            from: [],
-            to: [],
-            ...animOpts
-        },
-        {
-            duration: 1000,
-            easing: cubicOut,
-            interpolate: notween
-        }
+    // Set up fake tweens
+    let frontAnimation = animate(
+        { values: [], duration: 0, interpolate: notween }
     );
+    let backAnimation = animate(
+        { values: [], duration: 0, interpolate: notween }
+    );
+
+    $: animations = [$frontAnimation, $backAnimation];
 
     let groups = [];
 
@@ -76,38 +73,52 @@ export async function preload() {
         return {from, to};
     }
 
+    let isPlaying = false;
     const toggle_play = function() {
-        animation.play();
-    }
 
-    $: if ($animation[0] && typeof $animation[0] === 'string') {
-        forEach(reverseArray(toGroup.children), (path, i) => {
-            if (typeof $animation[i] === 'string') {
-                path.setAttribute('d', $animation[i]);
-            }
-        })
+        if (!isPlaying) {
+            isPlaying = true;
+            animations.map((animation) => {
+                let groupToPlay = animation.values === groups.from
+                    ? groups.to
+                    : groups.from;
+
+                animation.store.set(
+                    {
+                            values: groupToPlay,
+                            store: animation.store
+                    },
+                    {
+                            duration: 3000,
+                            easing: cubicOut,
+                    }
+                ).then(() => isPlaying = false);
+            })
+        }
     }
 
     onMount(()=> {
         if (typeof window !== 'undefined') {
             groups = gatherPaths(fromGroup.children, toGroup.children);
 
-            animation.update(
-                {
-                    ...groups,
-                    ...animOpts
-                }
-            );
-            // animation.update(
-            //     {
-            //         ...groups,
-            //         ...animOpts
-            //     }
-            // )
+            // Set initial values
+            frontAnimation.set({
+                values: groups.from,
+                duration: 0,
+                store: frontAnimation
+            });
+            backAnimation.set({
+                values: groups.to,
+                duration: 0,
+                store: backAnimation
+            }).then(() => animationsReady = true);
+
+
+
 
             window.anim = {
-                $animation,
-                animation
+                $frontAnimation,
+                animations
             };
 
             //console.log(fromGroup, toGroup, groups);
@@ -138,6 +149,19 @@ export async function preload() {
 
         //console.log(anime.running);
     });
+
+
+    $: if (animations && animationsReady) {
+
+        forEach(reverseArray(toGroup.children), (path, i) => {
+            fromGroup.children[i].setAttribute('d',
+                $backAnimation.values[i]
+            );
+            path.setAttribute('d',
+                $frontAnimation.values[i]
+            );
+        })
+    }
 
     // onDestroy(() => {
     //     timeline && timeline._stop();
