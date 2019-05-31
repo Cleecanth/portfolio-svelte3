@@ -1,0 +1,13 @@
+.wrap {
+    margin-left: auto;
+    margin-right: auto;
+    padding: type-space(0 2);
+
+    @include mq('smalls') {
+        padding: type-space(0 .5);
+    }
+}
+
+.wrap--wide {
+    max-width: px-to-rems($max-site-width);
+}

@@ -1,0 +1,101 @@
+{
+  "name": "portfolio",
+  "description": "Chris Lee's personal portfolio (using Svelte v3)",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cleecanth/portfolio.git"
+  },
+  "scripts": {
+    "dev": "sapper dev",
+    "build": "sapper build",
+    "export": "sapper export",
+    "start": "node __sapper__/build",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "test": "run-p --race dev cy:run"
+  },
+  "browserslist": [
+    ">0.5%",
+    "safari >= 10",
+    "last 3 iOS versions",
+    "last 3 Chrome versions",
+    "last 3 Firefox versions",
+    "last 2 Edge versions"
+  ],
+  "stylelint": false,
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "extends": [
+      "@uwhealth"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.js",
+          "**/*.mjs"
+        ],
+        "rules": {
+          "no-console": "off",
+          "complexity": "off"
+        }
+      }
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/*",
+    "__sapper__/*"
+  ],
+  "dependencies": {
+    "animejs": "^3.0.1",
+    "compression": "^1.7.1",
+    "polka": "^0.5.0",
+    "polymorph-js": "^0.2.4",
+    "sirv": "^0.4.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@uwhealth/linter-configs": "^1.5.4",
+    "@uwhealth/sass-tools": "^1.1.2",
+    "autoprefixer": "^9.5.1",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-loop-optimizer": "^1.4.1",
+    "babel-plugin-transform-named-imports": "^2.0.1",
+    "babel-types": "^6.26.0",
+    "core-js": "^3.0.1",
+    "css-loader": "^2.1.1",
+    "cssnano": "^4.1.10",
+    "eslint": "^5.16.0",
+    "eslint-plugin-import": "^2.17.2",
+    "fast-glob": "^2.2.6",
+    "file-loader": "^3.0.1",
+    "mini-css-extract-plugin": "^0.6.0",
+    "node-sass": "^4.12.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.6.0",
+    "prettier": "^1.17.0",
+    "raw-loader": "^2.0.0",
+    "sapper": "^0.27.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "stylelint": "^10.0.1",
+    "stylelint-order": "^3.0.0",
+    "svelte": "^3.4.1",
+    "svelte-loader": "^2.13.3",
+    "svelte-preprocess": "^2.6.5",
+    "svg-inline-loader": "^0.8.0",
+    "url-loader": "^1.1.2",
+    "val-loader": "^1.1.1",
+    "webpack": "^4.7.0"
+  }
+}

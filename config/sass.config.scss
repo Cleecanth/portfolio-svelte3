@@ -1,0 +1,153 @@
+@import '../node_modules/@uwhealth/sass-tools/index.scss';
+
+$base-font-size:            17.5px;
+$base-line-height:          28px;
+$font-looseness: 			35%;
+$auto-scale-type:           false;
+$scale-ratio:               1.175;
+
+$vertical-space:			$base-line-height; // Maintains best vertical rhythm
+$horizontal-space: 			$vertical-space; // Simplifies measurements
+
+$rem-px-fallback: 			false;
+
+$type-h1-size:           (70px, 70px);
+$type-h2-size:           (70px, 70px);
+$type-h3-size:           (50px, 56px);
+$type-h4-size:           (35px, 42px);
+$type-h5-size:           (28px, 35px);
+$type-h6-size:           (22px, 28px);
+$type-p-size:            ($base-font-size, $base-line-height);
+$type-small-size: 		 (13.5px, 21px);
+
+//Custom web fonts
+$use-web-fonts: 		true;
+//Relative path to fonts from CSS file
+$font-file-location: 	'/client/fonts/';
+
+// $web-fonts: (
+//     'Asap': (
+//         'weights': (400),
+//         'italics': false,
+//         'formats': ('woff')
+//     )
+// );
+
+$primary-font-stack:    "Rubik", Georgia, "Times New Roman", serif;
+$secondary-font-stack:  $system-font-stack;
+$monospace-font-stack:  "IBM Plex Mono", "Consolas", "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Monaco", "Courier New", "Courier", monospace;
+
+$column-width:           112px;
+
+$max-site-width:         12 * $column-width;
+
+$max-content-width: 	 7  * $column-width ;
+
+$max-wide-content-width: 9  * $column-width;
+
+$breakpoints: (
+    // Mostly phones
+        "smalls": "(max-width:#{ems($max-wide-content-width)})",
+    // Small Phones
+        "small": "(max-width: #{ems($max-content-width)})",
+    // Large (Modern) phones/phablets
+        "smallish":
+        "(min-width: #{ems($max-content-width+1px)})"+
+            " and (max-width: #{ems($max-wide-content-width)})",
+    // Tablets, Desktops and larger
+        "bigs": "(min-width: #{ems($max-wide-content-width+1px)})",
+    // Mostly Tablets and small laptops. Overrides Bigs
+        "lap":
+        "(min-width: #{ems($max-wide-content-width + 1px)})" +
+            " and (max-width: #{ems($max-site-width)})",
+    // Large Tablets and Desktops. Overrides Bigs.
+        "desk": "(min-width: #{ems($max-site-width)})"
+);
+
+$breakpoint-namespace-character: "\\@";
+
+
+$grid-columns:           12;
+$grid-gutter:            $horizontal-space;
+$grid-silent-classes:	 true;
+$grid-push:              true;
+$breakpoint-has-push:    map-keys($breakpoints);
+$grid-pull:              true;
+$breakpoint-has-pull:    map-keys($breakpoints);;
+
+$grid-bem-naming:        true;
+
+$grid-flex:              true;
+$grid-floats:            false;
+
+$grid-inline-block:      true;
+$grid-markup-fix:        false;
+$grid-letter-space-fix:  -0.45em;
+
+$breakpoint-has-widths: map-keys($breakpoints);;
+
+$base-colors: generate-color-variations(
+    $map: (
+        'type': (
+            'base': #181919,
+            'inverse': #F0F0F0
+        ),
+        'links': (
+            'base': #18EFC2,
+            'light': #BEFFDE,
+            'dark': #3EB8BB
+        ),
+        'highlight': (
+            'lighter': #BEFFDE,
+            'light': #34F5EE,
+            'base': #3EB8BB,
+            'dark': #1C9EAF
+        ),
+        'neutral': (
+            'darkest': #43494C,
+            'darker': #293F53,
+            'dark': #6A777C,
+            'base': #8FA0A7,
+            'light': #B3C4CA,
+            'lighter': #D4E0E6,
+            'lightest': #EEF4F7
+        ),
+        'bg': (
+         'light': #EEF4F7,
+         'blue': #011253,
+         'base': #293F53
+        )
+    ),
+    $variations: ( //Color variation names
+        'light', 'lighter', 'lightest',
+        'dark', 'darker', 'darkest'
+    ),
+    $functions: ( //functions to use when creating variations
+        'linearlight', 'lineardodge', 'tint',
+        'darken', 'linearburn', 'linearburn'
+    ),
+    $blending-colors: ( //Allows for more uniform colors
+        #0ED4DD, #70FFE7, null,
+        null, #0887A5, #1C9EAF
+    ),
+    $increments: ( //How strongly each color should be blended
+        25%,   60%,   80%,
+        5%,   40%,   70%
+    )
+);
+
+$highlight-gradient: color('highlight', 'light'),
+    color('highlight') 35%,
+    color('highlight', 'dark');
+
+$selection-background-color: mix(color('links'), color('bg'), 80%);
+
+$selection-color: black-or-white($selection-background-color);
+
+$debug-fonts: false;
+
+$debug-silent-classes: false;
+
+$debug-breakpoints: true;
+
+@include init;
