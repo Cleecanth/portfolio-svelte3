@@ -85,7 +85,7 @@
     "postcss-preset-env": "^6.6.0",
     "prettier": "^1.17.0",
     "raw-loader": "^2.0.0",
-    "sapper": "^0.27.0",
+    "sapper": "^0.27.11",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "stylelint": "^10.0.1",
